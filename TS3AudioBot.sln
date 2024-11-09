@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28711.60
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TS3AudioBot", "TS3AudioBot\TS3AudioBot.csproj", "{0ECC38F3-DE6E-4D7F-81EB-58B15F584635}"
 EndProject

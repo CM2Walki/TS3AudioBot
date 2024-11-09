@@ -2,18 +2,17 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
-
     <LangVersion>8.0</LangVersion>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
   </ItemGroup>
 
   <ItemGroup>
