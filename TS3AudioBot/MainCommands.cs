@@ -148,7 +148,7 @@ namespace TS3AudioBot
 		public static Task CommandBotDescriptionSet(Ts3Client ts3Client, string description) => ts3Client.ChangeDescription(description);
 
 		[Command("bot diagnose", "_undocumented")]
-		public static async Task<JsonArray<SelfDiagnoseMessage>> CommandBotDiagnose(Player player, IVoiceTarget target, Connection book, ConfRoot rootConf, WebServer webServer)
+		public static async Task<JsonArray<SelfDiagnoseMessage>> CommandBotDiagnose(Player player, IVoiceTarget target, Connection book, ConfRoot rootConf)
 		{
 			var problems = new List<SelfDiagnoseMessage>();
 			// ** Diagnose common playback problems and more **
@@ -191,17 +191,6 @@ namespace TS3AudioBot
 			catch (Exception ex)
 			{
 				problems.Add(new SelfDiagnoseMessage($"Could not find or run ffmpeg binary. Playback will NOT work. ({ex.Message})", "play", SelfDiagnoseLevel.Error));
-			}
-
-			// Check if web path is found
-			{
-				if (!rootConf.Web.Interface.Enabled)
-					problems.Add(new SelfDiagnoseMessage($"WebInterface is disabled.", "web", SelfDiagnoseLevel.Info));
-
-				var webPath = webServer.FindWebFolder();
-				if (rootConf.Web.Interface.Enabled &&
-					(webPath is null || !Directory.Exists(webPath) || !System.IO.File.Exists(Path.Combine(webPath, "index.html"))))
-					problems.Add(new SelfDiagnoseMessage($"WebInterface is enabled, but the required files are missing.", "web", SelfDiagnoseLevel.Error));
 			}
 
 			return new JsonArray<SelfDiagnoseMessage>(problems, x =>

@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace TS3AudioBot.Playlists.Parser
 {
@@ -27,9 +28,23 @@ namespace TS3AudioBot.Playlists.Parser
 			return serializer.Deserialize<XspfPlaylist>(jsonTextReader) ?? throw new NullReferenceException("Data empty");
 		}
 
+		public XspfPlaylist GetFromStream(Stream stream, Encoding encoding) => throw new NotImplementedException();
+
 		public XspfPlaylist GetFromString(string playlistString)
 		{
-			throw new NotImplementedException();
+			if (string.IsNullOrWhiteSpace(playlistString))
+			{
+				throw new ArgumentException("Playlist string cannot be null or empty.", nameof(playlistString));
+			}
+
+			try
+			{
+				return JsonConvert.DeserializeObject<XspfPlaylist>(playlistString);
+			}
+			catch (JsonException ex)
+			{
+				throw new InvalidOperationException("Failed to deserialize the playlist string into an XspfPlaylist object.", ex);
+			}
 		}
 
 		public string ToText(XspfPlaylist playlist)

@@ -71,7 +71,6 @@ namespace TS3AudioBot
 			builder.RequestModule<SystemMonitor>();
 			builder.RequestModule<DbStore>();
 			builder.RequestModule<PluginManager>();
-			builder.RequestModule<WebServer>();
 			builder.RequestModule<RightsManager>();
 			builder.RequestModule<BotManager>();
 			builder.RequestModule<TokenManager>();
@@ -87,7 +86,6 @@ namespace TS3AudioBot
 
 			injector.GetModuleOrThrow<CommandManager>().RegisterCollection(MainCommands.Bag);
 			injector.GetModuleOrThrow<RightsManager>().CreateConfigIfNotExists(setup.Interactive);
-			injector.GetModuleOrThrow<WebServer>().StartWebServer();
 			injector.GetModuleOrThrow<Stats>().StartTimer(setup.SendStats);
 			await injector.GetModuleOrThrow<BotManager>().RunBots(setup.Interactive);
 		}
@@ -132,7 +130,6 @@ namespace TS3AudioBot
 			if (botManager != null)
 				await botManager.StopBots();
 			injector.GetModule<PluginManager>()?.Dispose();
-			injector.GetModule<WebServer>()?.Dispose();
 			injector.GetModule<DbStore>()?.Dispose();
 			injector.GetModule<ResourceResolver>()?.Dispose();
 			injector.GetModule<DedicatedTaskScheduler>()?.Dispose();

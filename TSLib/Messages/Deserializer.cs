@@ -107,14 +107,18 @@ namespace TSLib.Messages
 			ss.First(line, AsciiSpace);
 			var key = ReadOnlySpan<byte>.Empty;
 			var value = ReadOnlySpan<byte>.Empty;
+
 			try
 			{
 				do
 				{
+					// Process the current line
 					var param = ss.Trim(line);
-					var kvpSplitIndex = param.IndexOf(AsciiEquals);
-					key = kvpSplitIndex >= 0 ? param.Slice(0, kvpSplitIndex) : ReadOnlySpan<byte>.Empty;
-					value = kvpSplitIndex <= param.Length - 1 ? param.Slice(kvpSplitIndex + 1) : ReadOnlySpan<byte>.Empty;
+					var paramCopy = param.ToArray(); // Copy to avoid lifetime issues
+					var kvpSplitIndex = paramCopy.AsSpan().IndexOf(AsciiEquals);
+
+					key = kvpSplitIndex >= 0 ? paramCopy.AsSpan(0, kvpSplitIndex) : ReadOnlySpan<byte>.Empty;
+					value = kvpSplitIndex <= paramCopy.Length - 1 ? paramCopy.AsSpan(kvpSplitIndex + 1) : ReadOnlySpan<byte>.Empty;
 
 					if (!key.IsEmpty)
 					{
@@ -138,10 +142,15 @@ namespace TSLib.Messages
 						}
 					}
 
+					// Safely move to the next line
 					if (!ss.HasNext)
 						break;
-					line = ss.Next(line);
+
+					// Copy the result of Next to avoid exposing variables outside of their scope
+					var nextLine = ss.Next(line).ToArray(); // Copy the result
+					line = nextLine.AsSpan(); // Reassign the copied array as a span
 				} while (line.Length > 0);
+
 				return true;
 			}
 			catch (Exception ex)

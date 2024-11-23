@@ -3602,7 +3602,7 @@ namespace TSLib.Messages
 			case "client_output_hardware": OutputHardwareEnabled = value.Length > 0 && value[0] != '0'; break;
 			case "client_output_muted": OutputMuted = value.Length > 0 && value[0] != '0'; break;
 			case "client_outputonly_muted": OutputOnlyMuted = value.Length > 0 && value[0] != '0'; break;
-			case "client_servergroups": { if(value.Length == 0) ServerGroups = Array.Empty<ServerGroupId>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerGroups = new ServerGroupId[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { { if(Utf8Parser.TryParse(ss.Trim(value), out u64 oval, out _)) ServerGroups[i] = (ServerGroupId)oval; } if (i < cnt) value = ss.Next(value); } } } break;
+			case "client_servergroups": { if(value.Length == 0) ServerGroups = Array.Empty<ServerGroupId>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerGroups = new ServerGroupId[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { { if(Utf8Parser.TryParse(ss.Trim(value), out u64 oval, out _)) ServerGroups[i] = (ServerGroupId)oval; } if (i < cnt) value = ss.Next(value).ToArray(); } } } break;
 			case "client_signed_badges": SignedBadges = (str)TsString.Unescape(value); break;
 			case "client_talk_power": { if(Utf8Parser.TryParse(value, out i32 oval, out _)) TalkPower = (i32)oval; } break;
 			case "client_talk_request": { if(Utf8Parser.TryParse(value, out u32 oval, out _)) TalkPowerRequestTime = Tools.FromUnix(oval); } break;
@@ -3897,7 +3897,7 @@ namespace TSLib.Messages
 			case "client_outputonly_muted": OutputOnlyMuted = value.Length > 0 && value[0] != '0'; break;
 			case "client_platform": ClientPlatform = (str)TsString.Unescape(value); break;
 			case "client_security_hash": SecurityHash = (str)TsString.Unescape(value); break;
-			case "client_servergroups": { if(value.Length == 0) ServerGroups = Array.Empty<ServerGroupId>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerGroups = new ServerGroupId[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { { if(Utf8Parser.TryParse(ss.Trim(value), out u64 oval, out _)) ServerGroups[i] = (ServerGroupId)oval; } if (i < cnt) value = ss.Next(value); } } } break;
+			case "client_servergroups": { if(value.Length == 0) ServerGroups = Array.Empty<ServerGroupId>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerGroups = new ServerGroupId[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { { if(Utf8Parser.TryParse(ss.Trim(value), out u64 oval, out _)) ServerGroups[i] = (ServerGroupId)oval; } if (i < cnt) value = ss.Next(value).ToArray(); } } } break;
 			case "client_talk_power": { if(Utf8Parser.TryParse(value, out i32 oval, out _)) TalkPower = (i32)oval; } break;
 			case "client_talk_request": { if(Utf8Parser.TryParse(value, out u32 oval, out _)) TalkPowerRequestTime = Tools.FromUnix(oval); } break;
 			case "client_talk_request_msg": TalkPowerRequestMessage = (str)TsString.Unescape(value); break;
@@ -4337,7 +4337,7 @@ namespace TSLib.Messages
 			case "client_output_hardware": OutputHardwareEnabled = value.Length > 0 && value[0] != '0'; break;
 			case "client_output_muted": OutputMuted = value.Length > 0 && value[0] != '0'; break;
 			case "client_platform": ClientPlatform = (str)TsString.Unescape(value); break;
-			case "client_servergroups": { if(value.Length == 0) ServerGroups = Array.Empty<ServerGroupId>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerGroups = new ServerGroupId[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { { if(Utf8Parser.TryParse(ss.Trim(value), out u64 oval, out _)) ServerGroups[i] = (ServerGroupId)oval; } if (i < cnt) value = ss.Next(value); } } } break;
+			case "client_servergroups": { if(value.Length == 0) ServerGroups = Array.Empty<ServerGroupId>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerGroups = new ServerGroupId[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { { if(Utf8Parser.TryParse(ss.Trim(value), out u64 oval, out _)) ServerGroups[i] = (ServerGroupId)oval; } if (i < cnt) value = ss.Next(value).ToArray(); } } } break;
 			case "client_talk_power": { if(Utf8Parser.TryParse(value, out i32 oval, out _)) TalkPower = (i32)oval; } break;
 			case "client_type": { if(Utf8Parser.TryParse(value, out i32 oval, out _)) ClientType = (ClientType)oval; } break;
 			case "client_unique_identifier": Uid = (Uid)TsString.Unescape(value); break;
@@ -5299,7 +5299,7 @@ namespace TSLib.Messages
 			case "client_output_hardware": OutputHardwareEnabled = value.Length > 0 && value[0] != '0'; break;
 			case "client_output_muted": OutputMuted = value.Length > 0 && value[0] != '0'; break;
 			case "client_platform": ClientPlatform = (str)TsString.Unescape(value); break;
-			case "client_servergroups": { if(value.Length == 0) ServerGroups = Array.Empty<ServerGroupId>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerGroups = new ServerGroupId[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { { if(Utf8Parser.TryParse(ss.Trim(value), out u64 oval, out _)) ServerGroups[i] = (ServerGroupId)oval; } if (i < cnt) value = ss.Next(value); } } } break;
+			case "client_servergroups": { if(value.Length == 0) ServerGroups = Array.Empty<ServerGroupId>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerGroups = new ServerGroupId[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { { if(Utf8Parser.TryParse(ss.Trim(value), out u64 oval, out _)) ServerGroups[i] = (ServerGroupId)oval; } if (i < cnt) value = ss.Next(value).ToArray(); } } } break;
 			case "client_talk_power": { if(Utf8Parser.TryParse(value, out i32 oval, out _)) TalkPower = (i32)oval; } break;
 			case "client_talk_request": { if(Utf8Parser.TryParse(value, out u32 oval, out _)) TalkPowerRequestTime = Tools.FromUnix(oval); } break;
 			case "client_talk_request_msg": TalkPowerRequestMessage = (str)TsString.Unescape(value); break;
@@ -6817,7 +6817,7 @@ namespace TSLib.Messages
 			case "virtualserver_hostmessage_mode": { if(Utf8Parser.TryParse(value, out i32 oval, out _)) HostmessageMode = (HostMessageMode)oval; } break;
 			case "virtualserver_icon_id": { if(!value.IsEmpty && value[0] == (u8)'-') { if(Utf8Parser.TryParse(value, out i32 oval, out _)) IconId = oval; } else { if(Utf8Parser.TryParse(value, out u64 oval, out _)) IconId = unchecked((i32)oval); } } break;
 			case "virtualserver_id": { if(Utf8Parser.TryParse(value, out u64 oval, out _)) VirtualServerId = (u64)oval; } break;
-			case "virtualserver_ip": { if(value.Length == 0) ServerIp = Array.Empty<IpAddr>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerIp = new IpAddr[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { ServerIp[i] = (IpAddr)TsString.Unescape(ss.Trim(value)); if (i < cnt) value = ss.Next(value); } } } break;
+			case "virtualserver_ip": { if(value.Length == 0) ServerIp = Array.Empty<IpAddr>(); else { var ss = new SpanSplitter<byte>(); ss.First(value, (byte)','); int cnt = 0; for (int i = 0; i < value.Length; i++) if (value[i] == ',') cnt++; ServerIp = new IpAddr[cnt + 1]; for(int i = 0; i < cnt + 1; i++) { ServerIp[i] = (IpAddr)TsString.Unescape(ss.Trim(value)); if (i < cnt) value = ss.Next(value).ToArray(); } } } break;
 			case "virtualserver_maxclients": { if(Utf8Parser.TryParse(value, out u16 oval, out _)) MaxClients = (u16)oval; } break;
 			case "virtualserver_name": ServerName = (str)TsString.Unescape(value); break;
 			case "virtualserver_name_phonetic": ServerPhoneticName = (str)TsString.Unescape(value); break;
